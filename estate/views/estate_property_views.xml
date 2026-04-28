@@ -125,8 +125,8 @@
                                     <field name="partner_id"/>
                                     <field name="validity"/>
                                     <field name="date_deadline"/>  
-                                    <button name="action_accept" type="object" icon="fa-check" attrs="{'invisible': [('status', '!=', False)]}"/>
-                                    <button name="action_refuse" type="object" icon="fa-times" attrs="{'invisible': [('status', '!=', False)]}"/>                               
+                                    <button name="action_accept" type="object" icon="fa-check"  title="Accept Offer" attrs="{'invisible': [('status', '!=', False)]}"/>
+                                    <button name="action_refuse" type="object" icon="fa-times"  title="Refuse Offer" attrs="{'invisible': [('status', '!=', False)]}"/>                               
                                     <field name="status"  invisible="1"/>
                                 </tree>
                             </field>

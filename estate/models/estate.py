@@ -6,9 +6,9 @@ from odoo.tools.float_utils import float_compare, float_is_zero
 class Estate(models.Model):
     _name = 'real.estate'
     _description = 'Real Estate application'
-    # _table = 'estate_property'
     _order = "id desc"
 
+    # Campos de datos
     name = fields.Char(string="Title", required=True)
     description = fields.Text(string="Description")
     postcode = fields.Char(string="Postcode")
@@ -39,7 +39,9 @@ class Estate(models.Model):
                    default='new',
                    copy=False
     )
-    active = fields.Boolean(string="Active", required='true', default='true')
+    active = fields.Boolean(string='Active', required=True, default=True)
+
+    #Campos Relacionales
     property_type_id = fields.Many2one("estate.property.type", string="Property Type")
     property_tag_ids = fields.Many2many("estate.property.tag", string="Property Tag")
     salesperson_id = fields.Many2one(
@@ -52,17 +54,18 @@ class Estate(models.Model):
         string='Buyer', 
         copy=False # Para evitar que, al duplicar una propiedad, se duplique el comprador
     )
-    property_ids = fields.One2many("real.estate", "property_type_id")
-    offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers", order="price desc")
+    offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
     
+    #Campos Computados
     total_area = fields.Integer(compute="_compute_total_area", string="Total Area")
+    best_offer = fields.Float(compute="_compute_best_offer", string="Best Offer")
 
     @api.depends("living_area","garden_area")
     def _compute_total_area(self):
         for record in self:
             record.total_area = record.living_area + record.garden_area
 
-    best_offer = fields.Float(compute="_compute_best_offer", string="Best Offer")
+    #Métodos
     @api.depends("offer_ids.price")
     def _compute_best_offer(self):
         for record in self:
@@ -95,13 +98,13 @@ class Estate(models.Model):
     @api.constrains('selling_price', 'expected_price')
     def _check_selling_expected(self):
         for record in self:
-            if record.selling_price > 0 and record.selling_price < (0.9 * record.expected_price):
-                raise ValidationError("The selling price can't be lower than 90% percent from the expected price")
+            if not float_is_zero(record.selling_price, precision_rounding=0.01):
+                if float_compare(record.selling_price, record.expected_price * 0.9, precision_rounding=0.01) < 0:
+                    raise ValidationError("The selling price can't be lower than 90 percent of the expected price")
     
     @api.ondelete(at_uninstall=False)
     def _check_state_before_deletion(self):
         for record in self:
             if record.status not in ('new', 'cancel'):
                 raise UserError("You can't delete a property that is not 'New' or 'Canceled'.")
-            
-                 
+
