@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="fix_white_background" inherit_id="website.layout">
+    <xpath expr="//div[@id='wrapwrap']" position="attributes">
+        <attribute name="style">background-color: #000000 !important;</attribute>
+    </xpath>
+    </template>
+    <template id="properties_page" name="Nuestras Casas">
+    <t t-call="website.layout">
+        <!-- Forzamos el fondo negro en el cuerpo de la página -->
+        <div id="wrap" class="oe_structure" style="background-color: #000000 !important; min-height: 100vh;">
+            <div class="container py-5">
+                <!-- Título en Lima -->
+                <h1 class="display-4 mb-5 fw-bold" style="font-family: 'Space Grotesk'; color: #CEF8A1 !important;">
+                    Catálogo Real Es-Tate
+                </h1>
+
+                <div class="row">
+                    <t t-foreach="properties" t-as="property">
+                        <div class="col-lg-4 mb-4">
+                            <!-- Tarjeta con borde Lima para que destaque en el negro -->
+                            <div class="card h-100 shadow-lg" 
+                                 style="background-color: #111111 !important; 
+                                        color: #ffffff !important; 
+                                        border: 1px solid #CEF8A1 !important; 
+                                        border-radius: 15px;">
+                                <div class="card-body p-4">
+                                    <h4 class="fw-bold mb-2" style="color: #0B8EE6 !important;">
+                                        <t t-esc="property.name"/>
+                                    </h4>
+                                    <p class="h3 mb-4" style="color: #CEF8A1;">
+                                        <span t-field="property.expected_price" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </p>
+                                    <div class="d-flex justify-content-between opacity-75 small border-top border-secondary pt-3">
+                                        <span><i class="fa fa-bed me-1"/> <t t-esc="property.bedrooms"/> Hab.</span>
+                                        <span><i class="fa fa-arrows-alt me-1"/> <t t-esc="property.living_area"/> m²</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+    </template>
+</odoo>

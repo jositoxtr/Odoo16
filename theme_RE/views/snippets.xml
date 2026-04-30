@@ -1,0 +1,38 @@
+<odoo>
+<template id="s_re_hero" name="Real Es-Tate Hero">
+    <section class="s_re_hero bg-black text-white pt96 pb96">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Columna de Texto -->
+                <div class="col-lg-6 py-5">
+                    <h1 class="display-1 fw-bold mb-4" style="font-family: 'Space Grotesk', sans-serif;">
+                        Tu futuro hogar, <br/>
+                        <span class="text-primary">sin límites.</span>
+                    </h1>
+                    <p class="lead mb-5" style="font-family: 'Lato', sans-serif; opacity: 0.8;">
+                        En Real Es-Tate seleccionamos propiedades con alma, diseño vanguardista y la mejor ubicación. Descubre nuestra colección exclusiva.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="/shop" class="btn btn-lg btn-primary px-5">Explorar Casas</a>
+                        <a href="/contactus" class="btn btn-lg btn-outline-light px-5">Contactar</a>
+                    </div>
+                </div>
+                <!-- Columna de Imagen -->
+                <div class="col-lg-6">
+                    <img src="/theme_RE/static/src/img/hero_casa.png" 
+                         class="img-fluid shadow-lg" 
+                         style="border-radius: 0 50px 50px 50px;" 
+                         alt="Casa de Lujo"/>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+<template id="s_re_hero_register" inherit_id="website.snippets">
+    <xpath expr="//div[@id='snippet_structure']//div[hasclass('o_panel_body')]" position="inside">
+        <t t-snippet="theme_RE.s_re_hero" t-thumbnail="/theme_RE/static/src/img/logo.png"/>
+    </xpath>
+</template>
+
+
+</odoo>

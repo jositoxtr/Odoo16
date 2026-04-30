@@ -1,0 +1,14 @@
+#wrap.re_properties_bg {
+  background-color: #000000 !important;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("/theme_RE/static/src/img/fondo.png") !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  min-height: 100vh;
+}
+
+.card {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  color: white !important;
+}
