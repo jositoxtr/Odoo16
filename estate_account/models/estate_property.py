@@ -6,6 +6,7 @@ class EstateProperty(models.Model):
 
     def action_sold(self):
         for record in self:
+            
             # 1. Verificar si el usuario tiene permiso de ESCRITURA en el modelo real.estate
             record.check_access_rights('write')
             

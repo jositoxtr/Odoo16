@@ -91,8 +91,13 @@ class Estate(models.Model):
             self.garden_area = 0
             self.garden_orientation = False
 
-    def action_sold(self):
+    def action_sold(self):    
         for record in self:
+
+        # VALIDACIÓN DEL EJERCICIO
+            if not any(offer.status == 'accepted' for offer in record.offer_ids):
+                raise UserError("No se puede vender una propiedad sin una oferta aceptada.")
+
             if record.status == 'canceled':
                 raise UserError("Properties that are canceled cannot be sold.")
             record.status = 'sold'

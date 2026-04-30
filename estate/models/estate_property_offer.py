@@ -56,16 +56,14 @@ class EstatePropertyOffer(models.Model):
     
     @api.model
     def create(self, vals):
-        # 1. Obtener la propiedad usando browse (porque property_id en vals es un ID entero)
+        #Obtener la propiedad usando browse (porque property_id en vals es un ID entero)
         property_rec = self.env['real.estate'].browse(vals['property_id'])
         
-        # 2. Validar que la oferta no sea menor a una existente
-        #if property_rec.offer_ids:
-        #    max_offer = max(property_rec.offer_ids.mapped('price'))
-        #    if vals['price'] < max_offer:
-        #        raise UserError(f"The offer should be higher than the current one ({max_offer}).")
+        # RESTRICCIÓN DEL EJERCICIO:
+        if property_rec.status == 'sold':
+            raise UserError("No puedes crear una oferta para una propiedad ya vendida.")
         
-        # 3. Cambiar el estado de la propiedad a 'Offer Received'
+        #Cambiar el estado de la propiedad a 'Offer Received'
         property_rec.status = 'offer_received'
         
         return super().create(vals)
