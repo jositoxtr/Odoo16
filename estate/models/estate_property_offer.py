@@ -60,10 +60,10 @@ class EstatePropertyOffer(models.Model):
         property_rec = self.env['real.estate'].browse(vals['property_id'])
         
         # 2. Validar que la oferta no sea menor a una existente
-        if property_rec.offer_ids:
-            max_offer = max(property_rec.offer_ids.mapped('price'))
-            if vals['price'] < max_offer:
-                raise UserError(f"The offer should be higher than the current one ({max_offer}).")
+        #if property_rec.offer_ids:
+        #    max_offer = max(property_rec.offer_ids.mapped('price'))
+        #    if vals['price'] < max_offer:
+        #        raise UserError(f"The offer should be higher than the current one ({max_offer}).")
         
         # 3. Cambiar el estado de la propiedad a 'Offer Received'
         property_rec.status = 'offer_received'

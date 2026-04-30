@@ -37,7 +37,8 @@
     <!--Menú superior, pestaña "Settings"-->
     <menuitem id="estate_menu_content_settings" 
               name="Settings" 
-              parent="estate_menu_root"/>
+              parent="estate_menu_root"
+              groups="estate.estate_group_manager"/>
 
     <menuitem id ="estate_property_type_menu_action"
               name="Property Types"
@@ -66,6 +67,7 @@
                 <field name="living_area"/>
                 <field name="expected_price"/>
                 <field name="selling_price"/>
+                <field name="company_id" groups="base.group_multi_company"/>
                 <field name="date_availability" optional="hide"/>
                 <field name="status" widget="badge" optional="hide"/>
             </tree>
@@ -89,11 +91,11 @@
                          <h1>
                             <field name="name" nolabel="1" attrs="{'readonly': [('status', 'in', ('sold', 'cancel'))]}"/>
                         </h1>
-                        <field name="property_tag_ids" widget="many2many_tags" nolabel="1" colspan="2" options="{'color_field': 'color'}" attrs="{'readonly': [('status', 'in', ('sold', 'cancel'))]}"/>
+                        <field name="property_tag_ids" widget="many2many_tags" nolabel="1" colspan="2" options="{'color_field': 'color', 'no_create': True, 'no_edit': True}" attrs="{'readonly': [('status', 'in', ('sold', 'cancel'))]}"/>
                     </div>
                     <group>
                     <group>
-                        <field name="property_type_id" string="Property Type" attrs="{'readonly': [('status', 'in', ('sold', 'cancel'))]}"/>
+                        <field name="property_type_id" string="Property Type" attrs="{'readonly': [('status', 'in', ('sold', 'cancel'))]}" options="{'no_create': True, 'no_open': True}"/>
                         <field name="postcode" attrs="{'readonly': [('status', 'in', ('sold', 'cancel'))]}"/>
                         <field name="date_availability" attrs="{'readonly': [('status', 'in', ('sold', 'cancel'))]}"/>
                     </group>
@@ -135,6 +137,7 @@
                             <group attrs="{'readonly': [('status', 'in', ('sold', 'cancel'))]}">
                                 <field name="salesperson_id"/>
                                 <field name="buyer_id"/>
+                                <field name="company_id" groups="base.group_multi_company" readonly="not context.get('params', {}).get('id')"/>
                             </group>
                         </page>
                     </notebook>
@@ -156,6 +159,7 @@
                 <field name="bedrooms" string="Bedrooms"/>
                 <field name="living_area" string="Living Area (m2)" filter_domain="[('living_area', '>=', self)]"/>
                 <field name="facades" string="Facades"/>
+                <field name="company_id" groups="base.group_multi_company"/> <!-- Filtro rápido por compañía -->
                 <separator/>
                 <filter string="Available" name="available" 
                     domain="['|', ('status', '=', 'new'), ('status', '=', 'offer_received')]"/>

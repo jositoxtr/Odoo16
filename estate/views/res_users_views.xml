@@ -5,8 +5,9 @@
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
+            <!-- Insertamos la pestaña con un nombre distinto para no chocar con la categoría -->
             <xpath expr="//notebook" position="inside">
-                <page string="Real Estate">
+                <page string="Real Estate Properties" name="real_estate_properties">
                     <field name="property_ids">
                         <tree>
                             <field name="name" string="Property Name"/>

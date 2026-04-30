@@ -44,10 +44,20 @@ class Estate(models.Model):
     #Campos Relacionales
     property_type_id = fields.Many2one("estate.property.type", string="Property Type")
     property_tag_ids = fields.Many2many("estate.property.tag", string="Property Tag")
+
+    #Añadimos company_id (Requerido y con valor por defecto la compañía actual)
+    company_id = fields.Many2one(
+        'res.company', 
+        string='Company', 
+        required=True, 
+        default=lambda self: self.env.company
+    )
+
     salesperson_id = fields.Many2one(
         'res.users', 
         string='Salesperson', 
-        default=lambda self: self.env.user # Por defecto, el usuario que crea el registro
+        #default=lambda self: self.env.user # Por defecto, el usuario que crea el registro
+        default=False  # Se cambia de self.env.user a False por tu requisito
     )
     buyer_id = fields.Many2one(
         'res.partner', 
@@ -108,3 +118,4 @@ class Estate(models.Model):
             if record.status not in ('new', 'cancel'):
                 raise UserError("You can't delete a property that is not 'New' or 'Canceled'.")
 
+    
