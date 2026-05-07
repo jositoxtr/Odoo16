@@ -1,0 +1,69 @@
+from odoo import api, fields, models
+from datetime import timedelta
+from odoo.exceptions import UserError
+
+class EstatePropertyOffer(models.Model):
+    _name='estate.property.offer'
+    _order = "price desc"
+    _description = 'Real Estate offers'
+
+    #Campos de datos
+    price = fields.Float()
+    status = fields.Selection(
+        selection=[('accepted', 'Accepted'), ('refused', 'Refused')],
+        copy=False
+    )
+    partner_id = fields.Many2one('res.partner', required=True)
+    property_id = fields.Many2one('real.estate', required=True)
+    validity = fields.Integer(string="Validity", default=7)
+    date_deadline = fields.Date(string="Deadline",  compute="_compute_date_deadline", inverse="_inverse_date_deadline")
+    property_type_id = fields.Many2one(related="property_id.property_type_id", string="Property Type", store=True)
+
+    #Métodos
+    @api.depends("create_date", "validity")
+    def _compute_date_deadline(self):
+        for record in self:
+            # Si el registro es nuevo, create_date es False, usamos la fecha de hoy
+            date = record.create_date.date() if record.create_date else fields.Date.today()
+            record.date_deadline = date + timedelta(days=record.validity)
+
+    def _inverse_date_deadline(self):
+        for record in self:
+            date = record.create_date.date() if record.create_date else fields.Date.today()
+            # Calculamos la diferencia de días para actualizar 'validity'
+            record.validity = (record.date_deadline - date).days
+    
+    def action_accept(self):
+        for record in self:
+            if record.property_id.status == 'sold':
+                raise UserError("Offers of a sold property can't be accepted.")
+            record.status = 'accepted'
+            record.property_id.write({
+                'buyer_id': record.partner_id.id,
+                'selling_price': record.price,
+                'status': 'offer_accepted',
+            })
+        return True
+
+    def action_refuse(self):
+        for record in self:
+            record.status = 'refused'
+            if record.property_id.buyer_id == record.partner_id:
+                record.property_id.buyer_id = False
+                record.property_id.selling_price = 0
+                record.property_id.status = 'offer_received'
+        return True
+    
+    @api.model
+    def create(self, vals):
+        #Obtener la propiedad usando browse (porque property_id en vals es un ID entero)
+        property_rec = self.env['real.estate'].browse(vals['property_id'])
+        
+        # RESTRICCIÓN DEL EJERCICIO:
+        if property_rec.status == 'sold':
+            raise UserError("No puedes crear una oferta para una propiedad ya vendida.")
+        
+        #Cambiar el estado de la propiedad a 'Offer Received'
+        property_rec.status = 'offer_received'
+        
+        return super().create(vals)

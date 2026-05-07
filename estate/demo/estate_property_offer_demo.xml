@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Oferta 1: Azure Interior -->
+        <record id="offer_1_big_villa" model="estate.property.offer">
+            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="property_id" ref="property_big_villa"/>
+            <field name="price">10000</field>
+            <field name="validity">14</field>
+            <!-- Usamos el objeto datetime que sí está disponible -->
+            <field name="create_date" eval="datetime.now().strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- Oferta 2: Azure Interior -->
+        <record id="offer_2_big_villa" model="estate.property.offer">
+            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="property_id" ref="property_big_villa"/>
+            <field name="price">1500000</field>
+            <field name="validity">14</field>
+            <field name="create_date" eval="datetime.now().strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- Oferta 3: Deco Addict -->
+        <record id="offer_3_big_villa" model="estate.property.offer">
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field name="property_id" ref="property_big_villa"/>
+            <field name="price">1500001</field>
+            <field name="validity">14</field>
+            <field name="create_date" eval="datetime.now().strftime('%Y-%m-%d')"/>
+        </record>
+    </data>
+
+        <!-- Se acepta la oferta más alta (Oferta 3) -->
+        <function model="estate.property.offer" name="action_accept" 
+                  eval="[ref('offer_3_big_villa')]"/>
+
+        <!-- Rechazadas -->
+        <function model="estate.property.offer" name="action_refuse" 
+                  eval="[ref('offer_1_big_villa')]"/>
+        
+        <function model="estate.property.offer" name="action_refuse" 
+                  eval="[ref('offer_2_big_villa')]"/>
+</odoo>

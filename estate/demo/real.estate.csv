@@ -1,0 +1,3 @@
+id,name,expected_price,bedrooms,living_area,date_availability
+property_villa,Villa Soleada,250000,4,150,2024-12-01
+property_piso,Apartamento Céntrico,120000,2,75,2024-11-15

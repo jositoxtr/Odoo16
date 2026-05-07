@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Propiedad 1: Casa en la playa -->
+        <record id="property_1" model="real.estate">
+            <field name="name">Casa en la playa</field>
+            <field name="description">Hermosa casa frente al mar con 3 habitaciones.</field>
+            <field name="postcode">08001</field>
+            <field name="expected_price">250000</field>
+            <field name="living_area">120</field>
+            <field name="facades">4</field>
+            <field name="garage">True</field>
+            <field name="garden">True</field>
+            <!-- Referencia al ID externo del tipo que creamos antes -->
+            <field name="property_type_id" ref="property_type_residential"/>
+        </record>
+
+        <!-- Propiedad 2: Almacén Industrial -->
+        <record id="property_2" model="real.estate">
+            <field name="name">Nave Industrial Norte</field>
+            <field name="description">Gran capacidad de carga y acceso para camiones.</field>
+            <field name="expected_price">500000</field>
+            <field name="living_area">1000</field>
+            <field name="property_type_id" ref="property_type_industrial"/>
+        </record>
+
+        <!-- Propiedad 3: Big Villa -->
+        <record id="property_big_villa" model="real.estate">
+            <field name="name">Big Villa</field>
+            <field name="status">new</field>
+            <field name="description">A nice and big villa</field>
+            <field name="postcode">12345</field>
+            <field name="date_availability">2020-02-02</field>
+            <field name="expected_price">1600000</field>
+            <field name="bedrooms">6</field>
+            <field name="living_area">100</field>
+            <field name="facades">4</field>
+            <field name="garage">True</field>
+            <field name="garden">True</field>
+            <field name="garden_area">100000</field>
+            <field name="garden_orientation">south</field>
+            <field name="property_type_id" ref="property_type_residential"/>
+        </record>
+
+        <!-- Propiedad 4: Trailer home -->
+        <record id="property_trailer_home" model="real.estate">
+            <field name="name">Trailer home</field>
+            <field name="status">canceled</field>
+            <field name="description">Home in a trailer park</field>
+            <field name="postcode">54321</field>
+            <field name="date_availability">1970-01-01</field>
+            <field name="expected_price">100000</field>
+            <field name="selling_price">120000</field>
+            <field name="bedrooms">1</field>
+            <field name="living_area">10</field>
+            <field name="facades">4</field>
+            <field name="garage">False</field>
+            <field name="property_type_id" ref="property_type_residential"/>
+        </record>
+
+        <record id="property_villa_with_offers" model="real.estate">
+            <field name="name">Villa con Ofertas Directas</field>
+            <field name="property_type_id" ref="property_type_residential"/>
+            <field name="description">Propiedad creada con ofertas integradas en el XML.</field>
+            <field name="expected_price">500000</field>
+            <field name="living_area">200</field>
+            <field name="postcode">28001</field>
+            
+            <!-- Definición de ofertas dentro del campo One2many -->
+            <field name="offer_ids" eval="[
+                (0, 0, {
+                    'partner_id': ref('base.res_partner_2'),
+                    'price': 600000,
+                    'validity': 7
+                }),
+                (0, 0, {
+                    'partner_id': ref('base.res_partner_12'),
+                    'price': 700000,
+                    'validity': 10
+                })
+            ]"/>
+        </record>
+    </data>
+</odoo>

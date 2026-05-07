@@ -1,0 +1,73 @@
+// Definición de fuentes (Google Fonts)
+$o-theme-font-configs: (
+  "Space Grotesk": (
+    "family": (
+      "Space Grotesk",
+      "Arial",
+      "Helvetica Neue",
+      "Helvetica",
+      sans-serif,
+    ),
+    "url": "Space+Grotesk:400,500,700",
+    "properties": (
+      "base": (
+        "font-size-base": 1rem,
+      ),
+    ),
+  ),
+  "Lato": (
+    "family": (
+      "Lato",
+      "Trebuchet MS",
+      sans-serif,
+    ),
+    "url": "Lato:300,300i,400,400i,700,700i",
+    "properties": (
+      "base": (
+        "font-size-base": 1.125rem,
+      ),
+    ),
+  ),
+);
+
+// Aplicar fuentes a títulos y cuerpo
+$o-theme-font-headings: "Space Grotesk";
+$o-theme-font-base: "Lato";
+
+// Paleta de colores Airproof
+$o-color-palettes: (
+  "airproof-palette": (
+    "color-1": #000000,
+    // Negro
+    "color-2": #bbe1fa,
+    // Azul claro
+    "color-3": #cef8a1,
+    // Lima
+    "color-4": #ffffff,
+    // Blanco
+    "color-5": #0b8ee6,
+    // Azul Airproof
+  ),
+);
+
+// Activar la paleta
+$o-theme-color-palette-number: "airproof-palette";
+
+// --- VARIABLES BOOTSTRAP PARA AIRPROOF ---
+
+// 1. Tamaños de fuente para encabezados (Headings)
+$h1-font-size: 3.125rem;
+$h2-font-size: 2.5rem;
+$h3-font-size: 2rem;
+$h4-font-size: 1.75rem;
+$h5-font-size: 1.5rem;
+$h6-font-size: 1.25rem;
+
+// 2. Personalización de Inputs (Campos de formulario)
+$input-border-radius: 10px;
+$input-border-color: #000000; // Negro
+$input-border-width: 1px;
+
+// 3. Botones Grandes (Estilo asimétrico Airproof)
+// Odoo usa variables específicas para botones grandes
+$btn-border-radius-lg: 0px 10px 10px 10px;
